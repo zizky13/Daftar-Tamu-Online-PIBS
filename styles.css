@@ -1,68 +1,194 @@
-body {
-  font-family: "Courier New", Courier, monospace;
-  line-height: 1.6;
-  color: #333;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #f4f4f4;
-}
-header {
-  background-color: #fff200;
-  color: white;
-  text-align: center;
-  padding: 1rem;
-  border-radius: 5px;
-}
-h1 {
-  margin-bottom: 0;
-}
-.subtitle {
-  font-style: italic;
-  margin-top: 0.5rem;
-  color: #fff200
-}
-.profile-image {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  margin: 20px auto;
-  display: block;
-  object-fit: cover;
-}
-section {
-  background-color: white;
-  margin: 20px 0;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-h2 {
-  color: #fff200;
-  border-bottom: 2px solid #fff200;
-  padding-bottom: 5px;
-}
-ul {
-  list-style-type: none;
-  padding-left: 0;
-}
-li {
-  margin-bottom: 10px;
-}
-.contact-info {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-}
-.contact-info a {
-  color: #fff200;
-  text-decoration: none;
-}
-.contact-info a:hover {
-  text-decoration: underline;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.card {
-    background-color: #919191;
-    color: #f4f4f4;
+.wrapper {
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    background-color: #1a237e;
+    color: white;
+    padding: 1rem;
+    width: 100%;
+}
+
+.container {
+    display: flex;
+    flex: 1;
+    width: 100%;
+}
+
+.img-container {
+    flex: 1/4;
+}
+
+.text-container {
+    flex: 3/4;
+    padding: 1rem;
+}
+
+header {
+    display: flex;
+    justify-content: row;
+    align-items: center;
+}
+
+img {
+    object-fit: cover;
+    width: 22dvh;
+    height: auto;
+}
+
+nav {
+    background-color: #283593;
+    color: white;
+    padding: 1rem;
+}
+
+main {
+    padding: 1rem;
+    background-color: #1c1c1c;
+    color: white;
+}
+
+aside {
+    background-color: #283593;
+    color: white;
+    padding: 1rem;
+}
+
+article {
+    background-color: #283593;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+footer {
+    background-color: #1a237e;
+    color: white;
+    grid-column: span 3;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2dvh;
+}
+
+.socmed {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: anchor-center;
+    margin-left: 2dvh;
+}
+
+.copyright {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.trademark {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: end;
+    margin-right: 0.5dvh;
+}
+
+/* Layout Desktop (> 1024px) */
+@media screen and (min-width: 1025px) {
+    nav {
+        width: 25%;
+    }
+    
+    main {
+        width: 50%;
+    }
+    
+    aside {
+        width: 25%;
+    }
+}
+
+/* Layout Tablet (768px - 1024px) */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    .container {
+        flex-wrap: wrap;
+    }
+    
+    nav {
+        width: 25%;
+    }
+    
+    main {
+        width: 75%;
+    }
+    
+    aside {
+        width: 100%;
+    }
+}
+
+/* Layout Mobile (< 768px) */
+@media screen and (max-width: 767px) {
+    .container {
+        flex-direction: column;
+    }
+    
+    nav, main, aside {
+        width: 100%;
+    }
+}
+
+/* Tambahan Styling */
+nav ul {
+    list-style: none;
+}
+
+nav ul li {
+    margin-bottom: 1rem;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #1a237e;
+}
+
+th {
+    background-color: #1a237e;
+}
+
+tr:hover {
+    background-color: #32408f;
+}
+
+.search-box {
+    margin-bottom: 1rem;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
 }
