@@ -1,5 +1,22 @@
-<!DOCTYPE html>
-<html lang="id">
+<?php
+// Database connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "daftar_tamu_pibs";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Fetch data from database
+$sql = "SELECT id, tanggal, nama, institusi, kategori, keperluan FROM data_tamu";
+$result = $conn->query($sql);
+?>
 
 <head>
     <meta charset="UTF-8">
@@ -46,15 +63,24 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>2024-01-03</td>
-                                <td>John Doe</td>
-                                <td>Universitas ABC</td>
-                                <td>Tamu Institusi</td>
-                                <td>Kunjungan Kerja Sama</td>
-                            </tr>
-                            <!-- Data lainnya dari database -->
+                            <?php
+                            if ($result->num_rows > 0) {
+                                // Output data of each row
+                                while ($row = $result->fetch_assoc()) {
+                                    echo "<tr>";
+                                    echo "<td>" . $row["id"] . "</td>";
+                                    echo "<td>" . $row["tanggal"] . "</td>";
+                                    echo "<td>" . $row["nama"] . "</td>";
+                                    echo "<td>" . $row["institusi"] . "</td>";
+                                    echo "<td>" . $row["kategori"] . "</td>";
+                                    echo "<td>" . $row["keperluan"] . "</td>";
+                                    echo "</tr>";
+                                }
+                            } else {
+                                echo "<tr><td colspan='6'>No data available</td></tr>";
+                            }
+                            $conn->close();
+                            ?>
                         </tbody>
                     </table>
                 </article>
@@ -86,11 +112,11 @@
                 <p>FB: @akun</p> <!-- Ganti dengan akun sosmed dari db -->
                 <p>Instagram: @akun</p> <!-- Ganti dengan akun sosmed dari db -->
             </section>
-    
+
             <section class="copyright">
-                <p>&copy; Copyright 2024. All Rights Reserved</p> 
+                <p>&copy; Copyright 2024. All Rights Reserved</p>
             </section>
-    
+
             <section class="trademark">
                 <h3>ZIKAR's WEB</h3> <!-- Ganti dengan nama web dari db -->
                 <p><i>Nosce to ipsum</i></p> <!-- Ganti dengan motto dari db -->
@@ -98,4 +124,5 @@
         </footer>
     </div>
 </body>
+
 </html>
