@@ -24,21 +24,22 @@ $result = $conn->query($sql);
     <title>Buku Tamu Online</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-
+<!-- dicky -->
 <body>
     <div class="wrapper">
-        <!-- part dicky -->
+        <!-- Header -->
         <header>
             <div class="img-container">
-                <img src="pepega.jpg" alt=""> <!-- Ganti dengan logo web dari db -->
+                <img src="<?= $webInfo['logo']; ?>" alt="Logo Web">
             </div>
             <div class="text-container">
-                <h1>Nama web - query db</h1> <!-- Ganti dengan nama web dari db -->
-                <h2>subtitle - query db</h2> <!-- Ganti dengan subtitle dari db -->
-                <h3>alamat/lokasi - query db</h3> <!-- Ganti dengan alamat/lokasi dari db -->
+                <h1><?= $webInfo['nama_web']; ?></h1>
+                <h2><?= $webInfo['subtitle']; ?></h2>
+                <h3><?= $webInfo['lokasi']; ?></h3>
             </div>
         </header>
 
+        <!-- Other content like navigation, table, and footer -->
         <div class="container">
             <nav>
                 <ul>
