@@ -16,6 +16,7 @@ if ($conn->connect_error) {
 // Fetch data from database
 $sql = "SELECT id, tanggal, nama, institusi, kategori, keperluan FROM data_tamu";
 $result = $conn->query($sql);
+$webInfo = $conn->query("SELECT * FROM web_info")->fetch_assoc();
 ?>
 
 <head>

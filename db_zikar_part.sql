@@ -36,6 +36,20 @@ INSERT INTO `data_tamu` (`id`, `tanggal`, `nama`, `institusi`, `kategori`, `kepe
 	(2, '2024-01-05', 'John Doe', 'Institut Tambal Ban', 'Tamu Institusi', 'Studi banding'),
 	(3, '2024-12-05', 'Jake Doe', 'Umum', 'Wali Mahasiswa', 'Mendaftarkan Anak');
 
+-- Dumping structure for table daftar_tamu_pibs.web_info
+CREATE TABLE IF NOT EXISTS `web_info` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `logo` varchar(255) DEFAULT NULL,
+  `nama_web` varchar(255) NOT NULL,
+  `subtitle` varchar(255) DEFAULT NULL,
+  `lokasi` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table daftar_tamu_pibs.web_info: ~1 rows (approximately)
+INSERT INTO `web_info` (`id`, `logo`, `nama_web`, `subtitle`, `lokasi`) VALUES
+	(1, 'pepega.jpg', 'Buku Tamu Online', 'Selamat datang di Buku Tamu Online', 'Jakarta, Indonesia');
+
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
