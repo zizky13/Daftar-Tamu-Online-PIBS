@@ -43,8 +43,7 @@ $result = $conn->query($sql);
             <nav>
                 <ul>
                     <li><a href="#daftar-tamu">Daftar Tamu</a></li>
-                    <li><a href="#statistik">Statistik Kunjungan</a></li>
-                    <li><a href="#panduan">Panduan</a></li>
+                    <li><a href="#statistik">Admin</a></li>
                 </ul>
             </nav>
 
