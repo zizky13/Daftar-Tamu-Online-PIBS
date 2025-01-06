@@ -45,7 +45,7 @@ $webInfo = $conn->query("SELECT * FROM web_info")->fetch_assoc();
             <nav>
                 <ul>
                     <li><a href="#daftar-tamu">Daftar Tamu</a></li>
-                    <li><a href="#statistik">Admin</a></li>
+                    <li><a href="crudDaftarTamu.php">CRUD Tamu</a></li>
                 </ul>
             </nav>
 
@@ -75,6 +75,7 @@ $webInfo = $conn->query("SELECT * FROM web_info")->fetch_assoc();
                                     echo "<td>" . $row["institusi"] . "</td>";
                                     echo "<td>" . $row["kategori"] . "</td>";
                                     echo "<td>" . $row["keperluan"] . "</td>";
+                                    echo "<td>hai</td>";
                                     echo "</tr>";
                                 }
                             } else {
@@ -82,6 +83,7 @@ $webInfo = $conn->query("SELECT * FROM web_info")->fetch_assoc();
                             }
                             $conn->close();
                             ?>
+                            
                         </tbody>
                     </table>
                 </article>
