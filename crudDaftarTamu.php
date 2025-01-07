@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
 $username = "root";
-$password = "daffa123";
+$password = "root123";
 $dbname = "daftar_tamu_pibs";
 
 // Create connection
@@ -45,21 +45,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $conn->query($sql);
                 break;
             default:
-                break;  
+                break;
         }
     }
 }
 
-// Fetch data from database
-$sql = "SELECT id, tanggal, nama, institusi, kategori, keperluan FROM data_tamu";
-$result = $conn->query($sql);
+// Fetch categories
+$sql = "SELECT * FROM kategori";
+$kategoriData = $conn->query($sql);
+
+// Fetch all records
+$sql1 = "SELECT data_tamu.id, data_tamu.tanggal, data_tamu.nama, data_tamu.institusi, kategori.nama_kategori AS kategori, data_tamu.keperluan 
+         FROM data_tamu 
+         JOIN kategori ON data_tamu.kategori = kategori.id";
+$result = $conn->query($sql1);
 
 // Fetch data for editing
 $editData = null;
 if (isset($_GET['edit'])) {
     $id = $_GET['edit'];
     $sql = "SELECT * FROM data_tamu WHERE id=$id";
-    $editResult = $conn->query($sql);
+    $editResult = $conn->query($sql); // Menggunakan query yang benar
     $editData = $editResult->fetch_assoc();
 }
 ?>
@@ -83,29 +89,25 @@ if (isset($_GET['edit'])) {
                     <input type="hidden" name="id" value="<?php echo $editData['id']; ?>">
                 <?php endif; ?>
                 <label for="tanggal">Tanggal:</label>
-                <input type="date" id="tanggal" name="tanggal" value="<?php echo $editData['tanggal'] ?? ''; ?>"
-                    required>
+                <input type="date" id="tanggal" name="tanggal" value="<?php echo $editData['tanggal'] ?? ''; ?>" required>
                 <label for="nama">Nama:</label>
                 <input type="text" id="nama" name="nama" value="<?php echo $editData['nama'] ?? ''; ?>" required>
                 <label for="institusi">Institusi:</label>
-                <input type="text" id="institusi" name="institusi" value="<?php echo $editData['institusi'] ?? ''; ?>"
-                    required>
+                <input type="text" id="institusi" name="institusi" value="<?php echo $editData['institusi'] ?? ''; ?>" required>
                 <label for="kategori">Kategori:</label>
                 <select id="kategori" name="kategori" required>
-                    <option value="Tamu Institusi" <?php if ($editData && $editData['kategori'] == 'Tamu Institusi')
-                        echo 'selected'; ?>>Tamu Institusi</option>
-                    <option value="Wali Mahasiswa" <?php if ($editData && $editData['kategori'] == 'Wali Mahasiswa')
-                        echo 'selected'; ?>>Wali Mahasiswa</option>
-                    <option value="Vendor" <?php if ($editData && $editData['kategori'] == 'Vendor')
-                        echo 'selected'; ?>>
-                        Vendor</option>
-                    <option value="Lainnya" <?php if ($editData && $editData['kategori'] == 'Lainnya')
-                        echo 'selected'; ?>>Lainnya</option>
+                    <?php while ($row = $kategoriData->fetch_assoc()) : ?>
+                        <option value="<?= htmlspecialchars($row['id']); ?>" 
+                            <?= isset($editData) && $editData['kategori'] == $row['id'] ? 'selected' : ''; ?>>
+                            <?= htmlspecialchars($row['nama_kategori']); ?>
+                        </option>
+                    <?php endwhile; ?>
                 </select>
                 <label for="keperluan">Keperluan:</label>
                 <input type="text" id="keperluan" name="keperluan" value="<?php echo $editData['keperluan'] ?? ''; ?>">
-                <button type="submit" name="action"
-                    value="<?php echo $editData ? 'edit' : 'add'; ?>"><?php echo $editData ? 'Update' : 'Add'; ?></button>
+                <button type="submit" name="action" value="<?php echo $editData ? 'edit' : 'add'; ?>">
+                    <?php echo $editData ? 'Update' : 'Add'; ?>
+                </button>
                 <?php if ($editData): ?>
                     <button type="button" onclick="window.location.href='crudDaftarTamu.php'">Batal</button>
                 <?php endif; ?>
