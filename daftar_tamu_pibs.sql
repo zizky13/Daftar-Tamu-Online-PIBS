@@ -6,7 +6,6 @@
 -- Generation Time: Jan 07, 2025 at 02:19 PM
 -- Server version: 9.1.0
 -- PHP Version: 8.3.12
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -26,7 +25,8 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `data_tamu`
 --
-
+cREATE DATABASE IF NOT EXISTS `daftar_tamu_pibs`;
+USE `daftar_tamu_pibs`;
 CREATE TABLE `data_tamu` (
   `id` int NOT NULL,
   `tanggal` date NOT NULL,
