@@ -2,7 +2,7 @@
 // Database connection
 $servername = "localhost";
 $username = "root";
-$password = "";
+$password = "daffa123";
 $dbname = "daftar_tamu_pibs";
 
 // Create connection
@@ -17,6 +17,7 @@ if ($conn->connect_error) {
 $sql = "SELECT id, tanggal, nama, institusi, kategori, keperluan FROM data_tamu";
 $result = $conn->query($sql);
 $webInfo = $conn->query("SELECT * FROM web_info")->fetch_assoc();
+$sosmed = $conn->query("SELECT * FROM sosmed")->fetch_assoc();
 ?>
 
 <head>
@@ -46,6 +47,7 @@ $webInfo = $conn->query("SELECT * FROM web_info")->fetch_assoc();
                 <ul>
                     <li><a href="#daftar-tamu">Daftar Tamu</a></li>
                     <li><a href="crudDaftarTamu.php">CRUD Tamu</a></li>
+                    <li><a href="sosmed.php">Sosial Media</a></li>
                 </ul>
             </nav>
 
@@ -111,9 +113,9 @@ $webInfo = $conn->query("SELECT * FROM web_info")->fetch_assoc();
         <!-- part daffa -->
         <footer>
             <section class="socmed">
-                <p>Twitter: @akun</p> <!-- Ganti dengan akun sosmed dari db -->
-                <p>FB: @akun</p> <!-- Ganti dengan akun sosmed dari db -->
-                <p>Instagram: @akun</p> <!-- Ganti dengan akun sosmed dari db -->
+                <p>Twitter: <?= $sosmed['twitter'];?></p> <!-- Ganti dengan akun sosmed dari db -->
+                <p>Facebook: <?= $sosmed['facebook'];?></p> <!-- Ganti dengan akun sosmed dari db -->
+                <p>Instagram: <?= $sosmed['instagram'];?></p> <!-- Ganti dengan akun sosmed dari db -->
             </section>
 
             <section class="copyright">
@@ -121,8 +123,8 @@ $webInfo = $conn->query("SELECT * FROM web_info")->fetch_assoc();
             </section>
 
             <section class="trademark">
-                <h3>ZIKAR's WEB</h3> <!-- Ganti dengan nama web dari db -->
-                <p><i>Nosce to ipsum</i></p> <!-- Ganti dengan motto dari db -->
+                <h3><?= $sosmed['website_name'];?> </h3> <!-- Ganti dengan nama web dari db -->
+                <p><i><?= $sosmed['motto'];?></i></p> <!-- Ganti dengan motto dari db -->
             </section>
         </footer>
     </div>
