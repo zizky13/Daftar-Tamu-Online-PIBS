@@ -1,17 +1,6 @@
 <?php
 // Database connection
-$servername = "localhost";
-$username = "root";
-$password = "root123";
-$dbname = "daftar_tamu_pibs";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include 'koneksi.php';
 // Fetch kategori data
 $sql = "SELECT * FROM kategori";
 $kategoriData = $conn->query($sql);
@@ -43,6 +32,7 @@ $sosmed = $conn->query("SELECT * FROM sosmed")->fetch_assoc();
     <link rel="stylesheet" href="styles.css">
 </head>
 <!-- dicky -->
+
 <body>
     <div class="wrapper">
         <!-- Header -->
@@ -61,10 +51,10 @@ $sosmed = $conn->query("SELECT * FROM sosmed")->fetch_assoc();
         <div class="container">
             <nav>
                 <ul>
-                    <li><a href="#daftar-tamu">Daftar Tamu</a></li>
+                    <li><a href="index.php">Daftar Tamu</a></li>
                     <li><a href="crudDaftarTamu.php">CRUD Tamu</a></li>
-                    <li><a href="crudHeader.php">Edit Header</a></li>
-                    <li><a href="sosmed.php">Sosial Media</a></li>
+                    <li><a href="crudHeader.php">CRUD Header</a></li>
+                    <li><a href="crudFooter.php">CRUD Footer</a></li>
                     <li><a href="crudKategori.php">CRUD Kategori</a></li>
                 </ul>
             </nav>
@@ -103,7 +93,7 @@ $sosmed = $conn->query("SELECT * FROM sosmed")->fetch_assoc();
                             }
                             $conn->close();
                             ?>
-                            
+
                         </tbody>
                     </table>
                 </article>
@@ -115,7 +105,7 @@ $sosmed = $conn->query("SELECT * FROM sosmed")->fetch_assoc();
                 <ul>
                     <?php
                     $kategoriData->data_seek(0); // Reset pointer result set
-                    while ($row = $kategoriData->fetch_assoc()) : ?>
+                    while ($row = $kategoriData->fetch_assoc()): ?>
                         <li><?= htmlspecialchars($row['nama_kategori']); ?></li>
                     <?php endwhile; ?>
                 </ul>
@@ -132,9 +122,9 @@ $sosmed = $conn->query("SELECT * FROM sosmed")->fetch_assoc();
         <!-- part daffa -->
         <footer>
             <section class="socmed">
-                <p>Twitter: <?= $sosmed['twitter'];?></p> <!-- Ganti dengan akun sosmed dari db -->
-                <p>Facebook: <?= $sosmed['facebook'];?></p> <!-- Ganti dengan akun sosmed dari db -->
-                <p>Instagram: <?= $sosmed['instagram'];?></p> <!-- Ganti dengan akun sosmed dari db -->
+                <p>Twitter: <?= $sosmed['twitter']; ?></p> <!-- Ganti dengan akun sosmed dari db -->
+                <p>Facebook: <?= $sosmed['facebook']; ?></p> <!-- Ganti dengan akun sosmed dari db -->
+                <p>Instagram: <?= $sosmed['instagram']; ?></p> <!-- Ganti dengan akun sosmed dari db -->
             </section>
 
             <section class="copyright">
@@ -142,8 +132,8 @@ $sosmed = $conn->query("SELECT * FROM sosmed")->fetch_assoc();
             </section>
 
             <section class="trademark">
-                <h3><?= $sosmed['website_name'];?> </h3> <!-- Ganti dengan nama web dari db -->
-                <p><i><?= $sosmed['motto'];?></i></p> <!-- Ganti dengan motto dari db -->
+                <h3><?= $sosmed['website_name']; ?> </h3> <!-- Ganti dengan nama web dari db -->
+                <p><i><?= $sosmed['motto']; ?></i></p> <!-- Ganti dengan motto dari db -->
             </section>
         </footer>
     </div>

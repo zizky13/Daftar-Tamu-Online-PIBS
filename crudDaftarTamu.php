@@ -1,16 +1,6 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "root123";
-$dbname = "daftar_tamu_pibs";
+include 'koneksi.php';
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 
 // Handle form submissions
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -54,6 +44,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $sql = "SELECT * FROM kategori";
 $kategoriData = $conn->query($sql);
 
+
+$sqlStatistik = "SELECT 
+    COUNT(*) AS total_tamu,
+    SUM(CASE WHEN kategori.nama_kategori = 'Tamu Institusi' THEN 1 ELSE 0 END) AS tamu_institusi,
+    SUM(CASE WHEN kategori.nama_kategori = 'Wali Mahasiswa' THEN 1 ELSE 0 END) AS wali_mahasiswa,
+    SUM(CASE WHEN kategori.nama_kategori = 'Vendor' THEN 1 ELSE 0 END) AS vendor,
+    SUM(CASE WHEN kategori.nama_kategori = 'Lainnya' THEN 1 ELSE 0 END) AS lainnya
+FROM data_tamu
+LEFT JOIN kategori ON data_tamu.kategori = kategori.id";
+$statistikData = $conn->query($sqlStatistik)->fetch_assoc();
+
+$webInfo = $conn->query("SELECT * FROM web_info")->fetch_assoc();
+$sosmed = $conn->query("SELECT * FROM sosmed")->fetch_assoc();
+
+
 // Fetch all records
 $sql1 = "SELECT data_tamu.id, data_tamu.tanggal, data_tamu.nama, data_tamu.institusi, kategori.nama_kategori AS kategori, data_tamu.keperluan 
          FROM data_tamu 
@@ -81,7 +86,30 @@ if (isset($_GET['edit'])) {
 </head>
 
 <body>
-    <main>
+    <div class="wrapper">
+    <header>
+            <div class="img-container">
+                <img src="<?= $webInfo['logo']; ?>" alt="Logo Web">
+            </div>
+            <div class="text-container">
+                <h1><?= $webInfo['nama_web']; ?></h1>
+                <h2><?= $webInfo['subtitle']; ?></h2>
+                <h3><?= $webInfo['lokasi']; ?></h3>
+            </div>
+        </header>
+
+    <div class="container">
+        <nav>
+            <ul>
+                <li><a href="index.php">Daftar Tamu</a></li>
+                <li><a href="crudDaftarTamu.php">CRUD Tamu</a></li>
+                <li><a href="crudHeader.php">CRUD Header</a></li>
+                <li><a href="crudFooter.php">CRUD Footer</a></li>
+                <li><a href="crudKategori.php">CRUD Kategori</a></li>
+            </ul>
+        </nav>
+
+        <main>
         <article>
             <h2><?php echo $editData ? 'Edit Record' : 'Add New Record'; ?></h2>
             <form method="POST" action="">
@@ -153,7 +181,46 @@ if (isset($_GET['edit'])) {
                 </tbody>
             </table>
         </article>
-    </main>
+        </main>
+
+        <aside>
+                <h2>Kategori Tamu</h2>
+                <ul>
+                    <?php
+                    $kategoriData->data_seek(0); // Reset pointer result set
+                    while ($row = $kategoriData->fetch_assoc()) : ?>
+                        <li><?= htmlspecialchars($row['nama_kategori']); ?></li>
+                    <?php endwhile; ?>
+                </ul>
+
+                <h2>Statistik Kunjungan</h2>
+                <p>Total Tamu: <?= $statistikData['total_tamu'] ?? 0; ?></p>
+                <p>Tamu Institusi: <?= $statistikData['tamu_institusi'] ?? 0; ?></p>
+                <p>Wali Mahasiswa: <?= $statistikData['wali_mahasiswa'] ?? 0; ?></p>
+                <p>Vendor: <?= $statistikData['vendor'] ?? 0; ?></p>
+                <p>Lainnya: <?= $statistikData['lainnya'] ?? 0; ?></p>
+
+            </aside>
+    </div>
+
+    <footer>
+            <section class="socmed">
+                <p>Twitter: <?= $sosmed['twitter']; ?></p>
+                <p>Facebook: <?= $sosmed['facebook']; ?></p>
+                <p>Instagram: <?= $sosmed['instagram']; ?></p>
+            </section>
+
+            <section class="copyright">
+                <p>&copy; Copyright 2024. All Rights Reserved</p>
+            </section>
+
+            <section class="trademark">
+                <h3><?= $sosmed['website_name']; ?> </h3>
+                <p><i><?= $sosmed['motto']; ?></i></p>
+            </section>
+        </footer>
+   
+    </div>
 </body>
 
 </html>
