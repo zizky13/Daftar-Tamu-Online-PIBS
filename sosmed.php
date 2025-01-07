@@ -22,8 +22,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $twitter = $_POST['twitter'];
                 $facebook = $_POST['facebook'];
                 $instagram = $_POST['instagram'];
+                $website_name = $_POST['website_name'];
+                $motto = $_POST['motto'];
 
-                $sql = "INSERT INTO sosmed (twitter, facebook, instagram) VALUES ('$twitter', '$facebook', '$instagram')";
+                $sql = "INSERT INTO sosmed (twitter, facebook, instagram, website_name, motto) VALUES ('$twitter', '$facebook', '$instagram', '$website_name', '$motto')";
                 $conn->query($sql);
                 break;
             case 'delete':
@@ -36,8 +38,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $twitter = $_POST['twitter'];
                 $facebook = $_POST['facebook'];
                 $instagram = $_POST['instagram'];
+                $website_name = $_POST['website_name'];
+                $motto = $_POST['motto'];
 
-                $sql = "UPDATE sosmed SET twitter='$twitter', facebook='$facebook', instagram='$instagram' WHERE id=$id";
+                $sql = "UPDATE sosmed SET twitter='$twitter', facebook='$facebook', instagram='$instagram', website_name='$website_name', motto='$motto' WHERE id=$id";
                 $conn->query($sql);
                 break;
             default:
@@ -47,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 // Fetch data from database
-$sql = "SELECT id, twitter, facebook, instagram FROM sosmed";
+$sql = "SELECT id, twitter, facebook, instagram, website_name, motto FROM sosmed";
 $result = $conn->query($sql);
 
 // Fetch data for editing
@@ -83,6 +87,10 @@ if (isset($_GET['edit'])) {
                 <input type="text" id="facebook" name="facebook" value="<?php echo $editData['facebook'] ?? ''; ?>" required>
                 <label for="instagram">Instagram:</label>
                 <input type="text" id="instagram" name="instagram" value="<?php echo $editData['instagram'] ?? ''; ?>" required>
+                <label for="website_name">Website Name:</label>
+                <input type="text" id="website_name" name="website_name" value="<?php echo $editData['website_name'] ?? ''; ?>" required>
+                <label for="motto">Motto:</label>
+                <input type="text" id="motto" name="motto" value="<?php echo $editData['motto'] ?? ''; ?>" required>
                 <button type="submit" name="action"
                     value="<?php echo $editData ? 'edit' : 'add'; ?>"><?php echo $editData ? 'Update' : 'Add'; ?></button>
                 <?php if ($editData): ?>
@@ -98,6 +106,8 @@ if (isset($_GET['edit'])) {
                         <th>Twitter</th>
                         <th>Facebook</th>
                         <th>Instagram</th>
+                        <th>Website Name</th>
+                        <th>Motto</th>
                         <th>Kelola</th>
                     </tr>
                 </thead>
@@ -110,6 +120,8 @@ if (isset($_GET['edit'])) {
                             echo "<td>" . $row["twitter"] . "</td>";
                             echo "<td>" . $row["facebook"] . "</td>";
                             echo "<td>" . $row["instagram"] . "</td>";
+                            echo "<td>" . $row["website_name"] . "</td>";
+                            echo "<td>" . $row["motto"] . "</td>";
                             echo "<td>
                                     <form method='POST' action='' style='display:inline-block;'>
                                         <input type='hidden' name='id' value='" . $row["id"] . "'>
@@ -120,7 +132,7 @@ if (isset($_GET['edit'])) {
                             echo "</tr>";
                         }
                     } else {
-                        echo "<tr><td colspan='5'>No data available</td></tr>";
+                        echo "<tr><td colspan='7'>No data available</td></tr>";
                     }
                     ?>
                 </tbody>
