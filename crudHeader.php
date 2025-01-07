@@ -24,8 +24,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Fetch current header data
+$sql = "SELECT * FROM kategori";
+$kategoriData = $conn->query($sql);
+
+$sqlStatistik = "SELECT 
+    COUNT(*) AS total_tamu,
+    SUM(CASE WHEN kategori.nama_kategori = 'Tamu Institusi' THEN 1 ELSE 0 END) AS tamu_institusi,
+    SUM(CASE WHEN kategori.nama_kategori = 'Wali Mahasiswa' THEN 1 ELSE 0 END) AS wali_mahasiswa,
+    SUM(CASE WHEN kategori.nama_kategori = 'Vendor' THEN 1 ELSE 0 END) AS vendor,
+    SUM(CASE WHEN kategori.nama_kategori = 'Lainnya' THEN 1 ELSE 0 END) AS lainnya
+FROM data_tamu
+LEFT JOIN kategori ON data_tamu.kategori = kategori.id";
+$statistikData = $conn->query($sqlStatistik)->fetch_assoc();
+
 $sql = "SELECT * FROM web_info WHERE id=1";
 $headerData = $conn->query($sql)->fetch_assoc();
+
+// Fetch footer data from database
+$sqlFooter = "SELECT * FROM sosmed";
+$sosmed = $conn->query($sqlFooter)->fetch_assoc();
+
 $conn->close();
 ?>
 
@@ -45,8 +63,8 @@ $conn->close();
             <img src="<?= htmlspecialchars($headerData['logo']); ?>" alt="Logo" class="header-logo">
             <div class="text-container">
                 <h1><?= htmlspecialchars($headerData['nama_web']); ?></h1>
-                <p><?= htmlspecialchars($headerData['subtitle']); ?></p>
-                <p><?= htmlspecialchars($headerData['lokasi']); ?></p>
+                <h2><?= htmlspecialchars($headerData['subtitle']); ?></h2>
+                <h3><?= htmlspecialchars($headerData['lokasi']); ?></h3>
             </div>
         </header>
 
@@ -57,6 +75,7 @@ $conn->close();
                     <li><a href="crudDaftarTamu.php">CRUD Tamu</a></li>
                     <li><a href="crudHeader.php">CRUD Header</a></li>
                     <li><a href="crudFooter.php">CRUD Footer</a></li>
+                    <li><a href="crudKategori.php">CRUD Kategori</a></li>
                 </ul>
             </nav>
 
@@ -82,20 +101,39 @@ $conn->close();
             </main>
 
             <aside>
-                <h2>Additional Info</h2>
-                <p>Provide any relevant information here.</p>
+                <h2>Kategori Tamu</h2>
+                <ul>
+                    <?php
+                    $kategoriData->data_seek(0); // Reset pointer result set
+                    while ($row = $kategoriData->fetch_assoc()) : ?>
+                        <li><?= htmlspecialchars($row['nama_kategori']); ?></li>
+                    <?php endwhile; ?>
+                </ul>
+
+                <h2>Statistik Kunjungan</h2>
+                <p>Total Tamu: <?= $statistikData['total_tamu'] ?? 0; ?></p>
+                <p>Tamu Institusi: <?= $statistikData['tamu_institusi'] ?? 0; ?></p>
+                <p>Wali Mahasiswa: <?= $statistikData['wali_mahasiswa'] ?? 0; ?></p>
+                <p>Vendor: <?= $statistikData['vendor'] ?? 0; ?></p>
+                <p>Lainnya: <?= $statistikData['lainnya'] ?? 0; ?></p>
             </aside>
         </div>
 
         <footer>
-            <div class="socmed">
-                <p>Twitter: @example</p>
-                <p>Facebook: /example</p>
-                <p>Instagram: @example</p>
-            </div>
-            <div class="copyright">
-                <p>&copy; 2025 Your Company</p>
-            </div>
+            <section class="socmed">
+                <p>Twitter: <?= htmlspecialchars($sosmed['twitter'] ?? 'Tidak ada data'); ?></p>
+                <p>Facebook: <?= htmlspecialchars($sosmed['facebook'] ?? 'Tidak ada data'); ?></p>
+                <p>Instagram: <?= htmlspecialchars($sosmed['instagram'] ?? 'Tidak ada data'); ?></p>
+            </section>
+
+            <section class="copyright">
+                <p>&copy; Copyright 2024. All Rights Reserved</p>
+            </section>
+
+            <section class="trademark">
+                <h3><?= htmlspecialchars($sosmed['website_name'] ?? 'Website Name'); ?></h3>
+                <p><i><?= htmlspecialchars($sosmed['motto'] ?? 'Motto'); ?></i></p>
+            </section>
         </footer>
     </div>
 </body>
