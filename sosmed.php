@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
 $username = "root";
-$password = "daffa123";
+$password = "root123";
 $dbname = "daftar_tamu_pibs";
 
 // Create connection

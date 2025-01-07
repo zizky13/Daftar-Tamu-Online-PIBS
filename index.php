@@ -2,8 +2,8 @@
 // Database connection
 $servername = "localhost";
 $username = "root";
-$password = "";
-$dbname = "";
+$password = "root123";
+$dbname = "daftar_tamu_pibs";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -12,10 +12,26 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
+// Fetch kategori data
+$sql = "SELECT * FROM kategori";
+$kategoriData = $conn->query($sql);
+
+// Fetch statistik data
+$sqlStatistik = "SELECT 
+    COUNT(*) AS total_tamu,
+    SUM(CASE WHEN kategori.nama_kategori = 'Tamu Institusi' THEN 1 ELSE 0 END) AS tamu_institusi,
+    SUM(CASE WHEN kategori.nama_kategori = 'Wali Mahasiswa' THEN 1 ELSE 0 END) AS wali_mahasiswa,
+    SUM(CASE WHEN kategori.nama_kategori = 'Vendor' THEN 1 ELSE 0 END) AS vendor,
+    SUM(CASE WHEN kategori.nama_kategori = 'Lainnya' THEN 1 ELSE 0 END) AS lainnya
+FROM data_tamu
+LEFT JOIN kategori ON data_tamu.kategori = kategori.id";
+$statistikData = $conn->query($sqlStatistik)->fetch_assoc();
 
 // Fetch data from database
-$sql = "SELECT id, tanggal, nama, institusi, kategori, keperluan FROM data_tamu";
-$result = $conn->query($sql);
+$sql1 = "SELECT data_tamu.id, data_tamu.tanggal, data_tamu.nama, data_tamu.institusi, kategori.nama_kategori AS kategori, data_tamu.keperluan 
+         FROM data_tamu 
+         JOIN kategori ON data_tamu.kategori = kategori.id";
+$result = $conn->query($sql1);
 $webInfo = $conn->query("SELECT * FROM web_info")->fetch_assoc();
 $sosmed = $conn->query("SELECT * FROM sosmed")->fetch_assoc();
 ?>
@@ -47,11 +63,9 @@ $sosmed = $conn->query("SELECT * FROM sosmed")->fetch_assoc();
                 <ul>
                     <li><a href="#daftar-tamu">Daftar Tamu</a></li>
                     <li><a href="crudDaftarTamu.php">CRUD Tamu</a></li>
-<<<<<<< HEAD
                     <li><a href="crudHeader.php">Edit Header</a></li>
-=======
                     <li><a href="sosmed.php">Sosial Media</a></li>
->>>>>>> 4333026bc524cd312e28049c53ee8530c8dd4976
+                    <li><a href="crudKategori.php">CRUD Kategori</a></li>
                 </ul>
             </nav>
 
@@ -82,7 +96,6 @@ $sosmed = $conn->query("SELECT * FROM sosmed")->fetch_assoc();
                                     echo "<td>" . $row["institusi"] . "</td>";
                                     echo "<td>" . $row["kategori"] . "</td>";
                                     echo "<td>" . $row["keperluan"] . "</td>";
-                                    echo "<td>hai</td>";
                                     echo "</tr>";
                                 }
                             } else {
@@ -98,20 +111,21 @@ $sosmed = $conn->query("SELECT * FROM sosmed")->fetch_assoc();
 
             <!-- part rafi -->
             <aside>
-                <h2>Kategori Tamu</h2> <!-- Ganti dengan kategori tamu dari db -->
+                <h2>Kategori Tamu</h2>
                 <ul>
-                    <li>Tamu Institusi</li>
-                    <li>Wali Mahasiswa</li>
-                    <li>Vendor</li>
-                    <li>Lainnya</li>
+                    <?php
+                    $kategoriData->data_seek(0); // Reset pointer result set
+                    while ($row = $kategoriData->fetch_assoc()) : ?>
+                        <li><?= htmlspecialchars($row['nama_kategori']); ?></li>
+                    <?php endwhile; ?>
                 </ul>
 
                 <h2>Statistik Kunjungan</h2>
-                <p>Total Tamu: 100</p> <!-- Ganti dengan total tamu dari db -->
-                <p>Tamu Institusi: 50</p> <!-- Ganti dengan total tamu institusi dari db -->
-                <p>Wali Mahasiswa: 20</p> <!-- Ganti dengan total wali mahasiswa dari db -->
-                <p>Vendor: 10</p> <!-- Ganti dengan total vendor dari db -->
-                <p>Lainnya: 20</p> <!-- Ganti dengan total lainnya dari db -->
+                <p>Total Tamu: <?= $statistikData['total_tamu']; ?></p>
+                <p>Tamu Institusi: <?= $statistikData['tamu_institusi']; ?></p>
+                <p>Wali Mahasiswa: <?= $statistikData['wali_mahasiswa']; ?></p>
+                <p>Vendor: <?= $statistikData['vendor']; ?></p>
+                <p>Lainnya: <?= $statistikData['lainnya']; ?></p>
             </aside>
         </div>
 
