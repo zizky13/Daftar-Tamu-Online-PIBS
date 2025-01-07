@@ -67,7 +67,7 @@ CREATE TABLE `sosmed` (
 
 LOCK TABLES `sosmed` WRITE;
 /*!40000 ALTER TABLE `sosmed` DISABLE KEYS */;
-INSERT INTO `sosmed` VALUES (2,'@dappal','@rizki','@ikis',NULL,NULL);
+INSERT INTO `sosmed` VALUES (2,'@dappa.mda','@dicky','@Rafi','web_dappa','mau kaya');
 /*!40000 ALTER TABLE `sosmed` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -115,4 +115,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-01-07 12:52:54
+-- Dump completed on 2025-01-07 13:10:05
