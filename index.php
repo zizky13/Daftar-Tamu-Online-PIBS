@@ -2,8 +2,8 @@
 // Database connection
 $servername = "localhost";
 $username = "root";
-$password = "daffa123";
-$dbname = "daftar_tamu_pibs";
+$password = "";
+$dbname = "";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -47,9 +47,14 @@ $sosmed = $conn->query("SELECT * FROM sosmed")->fetch_assoc();
                 <ul>
                     <li><a href="#daftar-tamu">Daftar Tamu</a></li>
                     <li><a href="crudDaftarTamu.php">CRUD Tamu</a></li>
+<<<<<<< HEAD
+                    <li><a href="crudHeader.php">Edit Header</a></li>
+=======
                     <li><a href="sosmed.php">Sosial Media</a></li>
+>>>>>>> 4333026bc524cd312e28049c53ee8530c8dd4976
                 </ul>
             </nav>
+
 
             <!-- part zikar -->
             <main>
