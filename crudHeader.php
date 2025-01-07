@@ -2,7 +2,7 @@
 // Database connection
 $servername = "localhost";
 $username = "root";
-$password = "DDescta22_";
+$password = "";
 $dbname = "daftar_tamu_pibs";
 
 // Create connection

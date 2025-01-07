@@ -46,8 +46,10 @@ $webInfo = $conn->query("SELECT * FROM web_info")->fetch_assoc();
                 <ul>
                     <li><a href="#daftar-tamu">Daftar Tamu</a></li>
                     <li><a href="crudDaftarTamu.php">CRUD Tamu</a></li>
+                    <li><a href="crudHeader.php">Edit Header</a></li>
                 </ul>
             </nav>
+
 
             <!-- part zikar -->
             <main>
