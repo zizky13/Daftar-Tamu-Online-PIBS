@@ -87,7 +87,7 @@ CREATE TABLE `sosmed` (
 --
 
 INSERT INTO `sosmed` (`id`, `twitter`, `facebook`, `instagram`, `website_name`, `motto`) VALUES
-(2, '@dappa.mda', '@dicky', '@Rafi', 'web_dappa', 'mau kaya');
+(2, '@dappa.mda', '@dicky', '@Rafi', 'Buku Tamu Online', 'Selamat datang di Buku Tamu Online');
 
 -- --------------------------------------------------------
 
@@ -108,7 +108,7 @@ CREATE TABLE `web_info` (
 --
 
 INSERT INTO `web_info` (`id`, `logo`, `nama_web`, `subtitle`, `lokasi`) VALUES
-(1, 'pepega.jpg', 'Buku Tamu Online', 'Selamat datang di Buku Tamu Online', 'Jakarta, Indonesia');
+(1, 'Buku.jpg', 'Buku Tamu Online', 'Selamat datang di Buku Tamu Online', 'Jakarta, Indonesia');
 
 --
 -- Indexes for dumped tables
